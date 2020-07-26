@@ -1,0 +1,22 @@
+﻿
+@model GraniteHouse.Models.ViewModel.ShoppingCartViewModel
+
+@{
+    if (Model.ShoppingCart.ShoppingCartItems.Count > 0)
+    {
+        <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Index" style="text-decoration:none">
+            <i class="fas fa-shopping-cart" style="color: #f8f9fa;"></i> &nbsp;
+            @{ 
+                var count = Model.ShoppingCart.ShoppingCartItems.Count;
+            }
+            <strong style="color: #f8f9fa;">(@count)</strong>
+        </a>
+    }
+    else
+    {
+        <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Index" style="text-decoration:none">
+            <i class="fas fa-shopping-cart" style="color: #f8f9fa;"></i> &nbsp;
+            <strong style="color: #f8f9fa;">(0)</strong>
+        </a>
+    }
+}

@@ -1,0 +1,96 @@
+﻿
+    <div class="container-fluid">
+        <a asp-area="Admin" asp-action="Index" asp-controller="Statistical"><h2 class="text-info"> Statistical</h2></a>
+        <div class="row">
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1" style="font-size:15px;"><a class="text-success" asp-area="Admin" asp-action="EaringYear" asp-controller="Statistical">Earnings Year(@DateTime.Now.Year)</a></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.EarningAnnuals.ToString("#,##0") Vnđ</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1" style="font-size:15px;"><a class="text-primary" asp-area="Admin" asp-action="EaringMonth" asp-controller="Statistical">Earnings Month(@DateTime.Now.Month)</a></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.EarningMonthly.ToString("#,##0") Vnđ</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1" style="font-size:15px;"><a class="text-info" asp-area="Admin" asp-action="Index" asp-controller="Appointments">New Orders</a></div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@ViewBag.NewOrders</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1" style="font-size:15px;"><a class="text-warning" asp-area="Admin" asp-action="Index" asp-controller="Customer">New Customer</a></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.NewCus</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-user-plus fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1" style="font-size:15px;"><a class="text-danger" asp-area="Admin" asp-action="Index" asp-controller="Products" asp-route-StatusFalse="Falses">Products Out of Stock!</a></div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.ProductOutOfStock</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

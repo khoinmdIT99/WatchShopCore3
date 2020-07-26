@@ -1,0 +1,101 @@
+﻿@model GraniteHouse.Models.ViewModel.AppointmentViewModel
+@{
+    ViewData["Title"] = "EaringMonth";
+}
+
+<div class="container-fluid">
+
+    <div class="card shadow mb-4">
+
+        <div class="card-header py-3">
+            <div class="dropdown text-right float-right">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Filter
+                </button>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @for (int i = 1; i <= 12; i++)
+                    {
+                        <a class="dropdown-item" asp-area="Admin" asp-action="EaringMonth" asp-controller="Statistical" asp-route-SelectedMonth="@i.ToString()">Month @i</a>
+                    }
+
+                </div>
+            </div>
+            @if (ViewBag.month == null)
+            {
+                <h2 class="text-info">Earnings @DateTime.Now.Month</h2>
+                <h2 class="text-primary">Revenue: @ViewBag.EarningThisMonth.ToString("#,##0") Vnđ</h2>
+            }
+            else
+            {
+                <h2 class="text-info">Earnings @ViewBag.month</h2>
+                <h2 class="text-primary">Revenue: @ViewBag.EarningbyMonth.ToString("#,##0") Vnđ</h2>
+            }
+
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-striped border">
+                <tr class="table-info">
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Sale Person
+                    </th>
+                    <th>
+                        Created Date
+                    </th>
+                    <th>
+                        Shipping Date
+                    </th>
+                    <th>
+                        Total
+                    </th>
+
+                    <th></th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.Appointments)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Id)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(m => item.SalesPerson.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.AppointmentCreatedDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => item.AppointmentDate)
+                        </td>
+                        <td>
+                            @String.Format("{0:0,0}", item.TotalAppointment)
+                        </td>
+                        <td style="width:150px">
+                            <div class="btn-group" role="group">
+                                <a target="_blank" type="button" class="btn btn-success" asp-area="Admin" asp-action="Details" asp-controller="Statistical" asp-route-id="@item.Id">
+                                    <i class="far fa-list-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+
+                }
+            </table>
+        </div>
+
+    </div>
+    <div page-model="@Model.PagingInfo" page-action="EaringMonth" page-classes-enabled="true"
+         page-class="btn border" page-class-normal="btn btn-default active"
+         page-class-selected="btn btn-primary active" class="btn-group m-1"></div>
+</div>
+

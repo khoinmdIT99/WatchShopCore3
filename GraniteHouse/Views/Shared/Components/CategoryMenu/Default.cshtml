@@ -1,0 +1,58 @@
+﻿@model GraniteHouse.Models.ViewModel.HomeViewModel
+@foreach (var item in Model.Categories)
+{
+    <li class="nav-item dropdown cool-link">
+        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @item.Name
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+            @foreach (var item_s in Model.ProductTypes.Where(a => a.CategoryId == item.Id))
+            {
+                <a class="dropdown-item " asp-area="Customer" asp-controller="Home" asp-action="ProductsByProductTypes" asp-route-id="@item_s.Id" asp-route-page="1">@item_s.Name</a>
+            }
+
+
+
+        </div>
+       
+
+    </li>
+}
+
+<li class="nav-item dropdown cool-link">
+    <a class="nav-link dropdown-toggle " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Brands
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        @foreach (var item_x in Model.Brands)
+        {
+            <a class="dropdown-item"asp-area="Customer" asp-controller="Home" asp-action="ProductsByBrands" asp-route-id="@item_x.Id" asp-route-page="1">@item_x.Name</a>
+        }
+    </div>   
+</li>
+
+<style>
+
+    .cool-link {
+        display: inline-block;
+        color: white;
+        text-decoration: none;
+    }
+
+    .cool-link::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 2px;
+        background: white;
+        transition: width .3s;
+    }
+
+    .cool-link:hover::after {
+        width: 100%;
+        transition: width .3s;
+    }
+</style>
+

@@ -1,0 +1,99 @@
+﻿@model GraniteHouse.Models.ViewModel.ProductsViewPage
+@{
+    ViewData["Title"] = "Index";
+}
+<form method="get">
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <a asp-area="Admin" asp-action="Index" asp-controller="Products"><h2 class="text-info">Product List</h2></a>
+
+
+                <div class="row">
+                    <div class="col-6">
+                        <div>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-5">
+                                        @Html.Editor("searchName", new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                    <div class="col-2">
+                                        <button type="submit" name="submit" value="Search" class="btn btn-primary form-control">
+                                            <i class="fas fa-search"></i> Search
+                                        </button>
+                                    </div>
+                                    <div class="dropdown">
+                                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Filter
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="dropdown-item" asp-area="Admin" asp-action="Index" asp-controller="Products" asp-route-StatusTrue="Trues">In Stock</a>
+                                            <a class="dropdown-item" asp-area="Admin" asp-action="Index" asp-controller="Products" asp-route-StatusFalse="Falses">Out of Stock</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus"></i>&nbsp; New Product </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card-body">
+                <table class="table table-striped border">
+                    <tr class="table-info">
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                        <th>
+                            Available
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        
+                        <th></th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model.Products)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.Name)
+                            </td>
+                            <td>
+                                @String.Format("{0:0,0}", item.Price)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Available)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Quantity)
+                            </td>
+                           
+                            <td>
+                                <partial name="_TableButtonPartial" model="item.Id" />
+                            </td>
+                        </tr>
+
+                    }
+                </table>
+            </div>
+
+        </div>
+        <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+             page-class="btn border" page-class-normal="btn btn-default active"
+             page-class-selected="btn btn-primary active" class="btn-group m-1"></div>
+    </div>
+
+</form>
+
+

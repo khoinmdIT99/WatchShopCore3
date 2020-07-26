@@ -1,0 +1,53 @@
+﻿@model List<GraniteHouse.Models.ProductsSelectedForAppointment>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@if (Model.Count > 0)
+{
+    <table class="table table-striped" width="100%">
+        <tr class="table-info">
+            <th style="text-align:center; width:20%"></th>
+            <th style="text-align:center;">
+                <label>Name</label>
+            </th>
+            <th style="text-align:center;">
+                <label>Price</label>
+            </th>
+            <th style="text-align:center;">
+                <label>Amount</label>
+            </th>
+            <th style="text-align:center;"></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+
+            //decimal newPrice = (item.Price - ((item.Price * item.Discount) / 100));
+            <tr style="padding:50px;">
+                <td>
+                    <a asp-area="Customer" target="_blank" asp-controller="Home" asp-action="Details" asp-route-id="@item.Products.Id">
+                        <img src="@item.Products.Image" width="100%" style="margin:auto; display:block; border-radius:5px; border:1px solid #bbb9b9;" />
+                    </a>
+                </td>
+                <td style="text-align:center">
+                    @item.productName
+                </td>
+                
+                <td style="text-align:center">
+                    @item.price.ToString("#,##0")
+                </td>
+                <td style="text-align:center">
+                    @item.quantity
+                </td>
+                <td style="text-align:center">
+                </td>
+
+            </tr>
+
+        }
+    </table>
+}
+else
+{
+    <div>No items added to the shopping cart...</div>
+}

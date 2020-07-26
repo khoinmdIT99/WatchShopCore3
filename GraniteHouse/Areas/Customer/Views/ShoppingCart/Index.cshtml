@@ -1,0 +1,223 @@
+﻿@model GraniteHouse.Models.ViewModel.ShoppingCartViewModel
+@{
+    ViewData["Title"] = "Index";
+}
+@*
+    <form method="post">
+        <br /><br />
+        <h2 class="text-info">Your Shopping Cart</h2>
+        <br />
+        @if (Model.Products.Count > 0)
+        {
+            <div class="container border border-secondary rounded" style="padding:15px;">
+                <div class="row">
+                    <div class="col-8" style="border-right:1px solid #bbb9b9;">
+                        <table class="table table-striped" width="100%">
+                            <tr class="table-info">
+                                <th style="text-align:center; width:20%"></th>
+                                <th style="text-align:center;">
+                                    <label asp-for="@Model.Products.FirstOrDefault().Name"></label>
+                                </th>
+                                <th style="text-align:center;">
+                                    <label asp-for="@Model.Products.FirstOrDefault().Price"></label>
+                                </th>
+                                <th style="text-align:center;">
+                                    <label asp-for="@Model.Products.FirstOrDefault().ShadeColor"></label>
+                                </th>
+                                <th style="text-align:center;">
+                                    <label asp-for="@Model.Products.FirstOrDefault().ProductTypes.Name"></label>
+                                </th>
+                                <th style="text-align:center;"></th>
+                            </tr>
+                            @foreach (var item in Model.Products)
+                            {
+                                <tr style="padding:50px;">
+                                    <td>
+                                        <a asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-id="@item.Id">
+                                            <img src="@item.Image" width="100%" style="margin:auto; display:block; border-radius:5px; border:1px solid #bbb9b9;" />
+                                        </a>
+                                    </td>
+                                    <td style="text-align:center">
+                                        @Html.DisplayFor(c => item.Name)
+                                    </td>
+                                    <td style="text-align:center">
+                                        @item.Price.ToString("#,##0")
+                                    </td>
+                                    <td style="text-align:center">
+                                        @Html.DisplayFor(c => item.ShadeColor)
+                                    </td>
+                                    <td style="text-align:center">
+                                        @Html.DisplayFor(c => item.ProductTypes.Name)
+                                    </td>
+                                    <td style="text-align:center">
+                                        <button type="submit" class="btn btn-danger" asp-action="remove" asp-route-id="@item.Id">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+
+                            }
+                        </table>
+                    </div>
+                    <div class="col-4" style="padding-left:30px;">
+                        <div class="row">
+                            <div class="col-12">
+                                <label>Name : </label>
+                            </div>
+                            <div class="col-12" style="padding-bottom:15px">
+                                <input asp-for="@Model.Appointments.CustomerName" class="form-control" />
+                            </div>
+                            <div class="col-12">
+                                <label>Phone Number : </label>
+                            </div>
+                            <div class="col-12" style="padding-bottom:15px">
+                                <input asp-for="@Model.Appointments.CustomerPhoneNumber" class="form-control" />
+                            </div>
+                            <div class="col-12">
+                                <label>Email  : </label>
+                            </div>
+                            <div class="col-12" style="padding-bottom:15px">
+                                <input asp-for="@Model.Appointments.CustomerEmail" class="form-control" />
+                            </div>
+                            <div class="col-12">
+                                <label>Appointment Date : </label>
+                            </div>
+                            <div class="col-12" style="padding-bottom:15px">
+                                <input asp-for="@Model.Appointments.AppointmentDate" value="" type="text" id="datepicker" class="form-control" />
+                            </div>
+                            <div class="col-12">
+                                <label>Appointment Time : </label>
+                            </div>
+                            <div class="col-12" style="padding-bottom:15px">
+                                <input asp-for="@Model.Appointments.AppointmentTime" value="" type="text" class="timepicker form-control" />
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" id="btnPlaceOrder" class="btn btn-success">Schedule Appointment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div>No items added to the shopping cart...</div>
+
+        }
+    </form>
+
+    @section Scripts{
+        <script>
+            $('.timepicker').timepicker({
+                timeFormat: 'h:mm p',
+                interval: 30,
+                minTime: '10',
+                maxTime: '3:00pm',
+                startTime: '10:00',
+                dynamic: true,
+                dropdown: true,
+                scrollbar: true
+            });
+
+            $(function () {
+                $("#datepicker").datepicker({
+                    minDate: +1, maxDate: "+3M"
+                });
+            });
+        </script>
+    }
+*@
+
+<div class="container body-content">
+    <br />
+    <h2 class="text-info">Your Shopping Cart</h2>
+
+    <div class="text-right" style="margin-bottom:20px;position:relative;right:15px;">
+        <div class="btn-group ">
+            <a type="button" class="btn btn-danger" asp-controller="ShoppingCart" asp-action="Clear">Clear Bags</a>
+        </div>
+    </div>
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-sm-12">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tr class="table-info">
+                            <th>Image</th>
+                            <th>Product Names</th>
+                            <th>Amounts</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                        @{
+                            int i = 0;
+                            decimal total = 0;
+                        }
+
+                        @foreach (var line in Model.ShoppingCart.ShoppingCartItems)
+                        {
+                            decimal newPrice = (line.Products.Price - ((line.Products.Price * line.Products.Discount) / 100));
+                            <tr>
+                                <td class="text-center">
+                                    <a target="_blank" asp-area="Customer" asp-controller="Home" asp-action="Details" asp-route-id="@line.Products.Id">
+                                        <img src="@line.Products.Image" width="70" height="60" />
+                                    </a>
+                                </td>
+                                <td>@line.Products.Name</td>
+                                <td style="text-align:center">
+                                    <form id="formSoluong_@i" asp-area="Customer" asp-controller="ShoppingCart" asp-action="FixAmount" method="get">
+                                        <input type="hidden" name="productId" value="@line.Products.Id" />
+                                        <input class="col-lg-4" style="height:30px;" type="number" min="1" step="1" name="newAmount" value="@line.Amount" onchange="$('#formSoluong_@i').submit();" />
+                                    </form>
+                                </td>
+                                @if (line.Products.Price > newPrice)
+                                {
+                                    <td>@newPrice.ToString("#,##0") đ</td>
+                                    <td> @((line.Amount * newPrice).ToString("#,##0")) đ</td>
+                                }
+                                else
+                                {
+                                    <td>@line.Products.Price.ToString("#,##0") đ</td>
+                                    <td> @((line.Amount * line.Products.Price).ToString("#,##0")) đ</td>
+                                }
+
+
+                                <td style="text-align:center">
+                                    <a type="button" class="btn btn-danger" asp-controller="ShoppingCart" asp-action="RemoveFromShoppingCart" asp-route-productId="@line.Products.Id"> <i class="fas fa-trash-alt"></i></a>
+                                </td>
+                            </tr>
+                            i++;
+                            @if (line.Products.Price > newPrice)
+                            {
+                                total += (line.Amount * newPrice);
+                            }
+                            else
+                            {
+                                total += (line.Amount * line.Products.Price);
+                            }
+
+                        }
+                        <tr>
+                            <td></td>
+                            <td class="text-right"></td>
+                            <td></td>
+                            <td>SubTotal:</td>
+                            <td style="font-size:large;">@total.ToString("#,##0") đ</td>
+                            <td style="text-align:center"><a class="btn btn-success" asp-controller="Appointments" asp-action="Checkout">Check out</a></td>
+                        </tr>
+                    </table>
+
+
+                </div>
+            </div>
+
+        </div>
+        <a class="btn btn-light" asp-controller="Home" asp-action="Index">Continue Shopping</a>
+    </div>
+    <br />
+</div>

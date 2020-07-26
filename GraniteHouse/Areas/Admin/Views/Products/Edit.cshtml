@@ -1,0 +1,130 @@
+﻿@model GraniteHouse.Models.ViewModel.ProductsViewModel
+@using GraniteHouse.Extensions
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+
+
+<form method="post" enctype="multipart/form-data">
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h2 class="text-info">Edit Product</h2>
+            </div>
+            <div class="p-4 rounded row">
+                <input hidden asp-for="Products.Id" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-8">
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Products.Name"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="Products.Name" class="form-control" />
+                        </div>
+                        <span asp-validation-for="Products.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Products.Price"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="Products.Price" class="form-control" />
+                        </div>
+                        <span asp-validation-for="Products.Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Products.Discount"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="Products.Discount" class="form-control" />
+                        </div>
+                        <span asp-validation-for="Products.Discount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Products.Quantity"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="Products.Quantity" class="form-control" />
+                        </div>
+                        <span asp-validation-for="Products.Quantity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Products.Image"></label>
+                        </div>
+                        <div class="col-8">
+                            <input type="file" name="files" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="ProductTypes"></label>
+                        </div>
+                        <div class="col-8">
+                            <select asp-for="@Model.Products.ProductTypeId" asp-items="Model.ProductTypes.ToSelectListItem(Model.Products.ProductTypeId)" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="SpecialTags"></label>
+                        </div>
+                        <div class="col-8">
+                            <select asp-for="@Model.Products.SpecialTagsID" asp-items="Model.SpecialTags.ToSelectListItem(Model.Products.SpecialTagsID)" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Brands"></label>
+                        </div>
+                        <div class="col-8">
+                            <select asp-for="@Model.Products.BrandId" asp-items="Model.Brands.ToSelectListItem(Model.Products.BrandId)" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Products.Description"></label>
+                        </div>
+                        <div class="col-8">
+                            <textarea asp-for="Products.Description" class="form-control"rows="6" style="height:100px;"></textarea>
+                        </div>
+                        <span asp-validation-for="Products.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Products.Available"></label>
+                        </div>
+                        <div class="col-8">
+                            <input type="checkbox" asp-for="Products.Available" class="form-control"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1">
+
+                </div>
+                <div class="col-3">
+                    <img src="@Model.Products.Image" width="100%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+                </div>
+
+
+           
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Update" />
+                    <a asp-action="Index" class="btn btn-success">Back to List</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

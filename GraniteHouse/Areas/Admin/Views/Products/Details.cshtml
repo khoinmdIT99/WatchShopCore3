@@ -1,0 +1,116 @@
+﻿@model GraniteHouse.Models.ViewModel.ProductsViewModel
+@using GraniteHouse.Extensions
+
+
+
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h2 class="text-info">Product Details</h2>
+        </div>
+        <div class="p-4 rounded row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Products.Name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Products.Name" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Products.Price"></label>
+                    </div>
+                    <div class="col-8">
+                        @{
+                            var money = Model.Products.Price;
+                            string tt = String.Format("{0:0,0}", money);
+
+                        }
+                        <input asp-for="@tt" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Products.Discount"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Products.Discount" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Products.Quantity"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Products.Quantity" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="ProductTypes"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Products.ProductTypes.Name" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="SpecialTags"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Products.SpecialTags.Name" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Brands"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Products.Brand.Name" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Products.CreatedDate"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Products.CreatedDate" readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Products.Description"></label>
+                    </div>
+                    <div class="col-8">
+                        <textarea asp-for="Products.Description" readonly class="form-control" rows="6" style="height:100px;" ></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Products.Available"></label>
+                    </div>
+                    <div class="col-8">
+                        <input type="checkbox" disabled class="form-control" asp-for="Products.Available" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-1">
+
+            </div>
+            <div class="col-3">
+                <img src="@Model.Products.Image" width="100%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+            </div>
+
+
+ 
+            <div class="form-group">
+                <a asp-action="Edit" class="btn btn-primary" asp-route-id="@Model.Products.Id">Edit</a>
+                <a asp-action="Index" class="btn btn-success">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+

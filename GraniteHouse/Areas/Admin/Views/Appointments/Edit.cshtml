@@ -1,0 +1,243 @@
+﻿@model GraniteHouse.Models.ViewModel.AppointmentDetailsViewModel
+@using GraniteHouse.Extensions
+@using GraniteHouse.Utility
+@using Microsoft.AspNetCore.Http.Extensions
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<form method="post" enctype="multipart/form-data">
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h2 class="text-info">Edit Order</h2>
+                <div class="text-right">
+                    <a asp-action="Invoice" asp-controller="Appointments" asp-route-id="@Model.Appointment.Id"  target="_blank"><i class="fa fa-print" style="font-size:30px;"></i></a>
+                </div>
+                
+            </div>
+            <div class="p-4 rounded row">
+                <input hidden asp-for="Appointment.Id" />
+                <input hidden asp-for="Appointment.AppointmentCreatedDate" />
+                <input hidden asp-for="Appointment.CustomerPhoneNumber" />
+                <input hidden asp-for="Appointment.TotalAppointment" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="col-6">
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Appointment.CustomerName"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="Appointment.CustomerName" class="form-control" />
+                        </div>
+                        <span asp-validation-for="Appointment.CustomerName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Appointment.CustomerPhoneNumber"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="Appointment.CustomerPhoneNumber" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Appointment.CustomerEmail"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="Appointment.CustomerEmail" class="form-control" />
+                        </div>
+                        <span asp-validation-for="Appointment.CustomerEmail" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Appointment.CustomerAddress"></label>
+                        </div>
+                        <div class="col-8">
+                            <textarea asp-for="Appointment.CustomerAddress" class="form-control" rows="6" style="height:50px;"></textarea>
+                        </div>
+                        <span asp-validation-for="Appointment.CustomerAddress" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Appointment.Note"></label>
+                        </div>
+                        <div class="col-8">
+                            <textarea asp-for="Appointment.Note" class="form-control" rows="6" style="height:50px;"></textarea>
+                        </div>
+                        <span asp-validation-for="Appointment.Note" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Appointment.TotalAppointment"></label>
+                        </div>
+                        <div class="col-8">
+                            @{
+                                string p = String.Format("{0:0,0}", Model.Appointment.TotalAppointment);
+                            }
+                            <input asp-for="@p" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="Appointment.AppointmentCreatedDate"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="Appointment.AppointmentCreatedDate" id="datepicker" disabled type="text" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label>Delivery Date(*)</label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="Appointment.AppointmentDate" id="datepicker2" type="text" class="form-control" />
+                        </div>
+                        <span asp-validation-for="Appointment.AppointmentDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label>Sales Person(*)</label>
+                        </div>
+                        <div class="col-8">
+                            @if (User.IsInRole(SD.AdminEndUser))
+                            {
+                                <input asp-for="@Model.Appointment.SalesPerson.Name" readonly class="form-control" />
+                                <input asp-for="@Model.Appointment.SalesPersonId" hidden />
+
+                            }
+                            else
+                            {
+                                <select asp-for="@Model.Appointment.SalesPersonId" asp-items="Model.SalesPerson.ToSelectListItemString(Model.Appointment.SalesPersonId)" class="form-control"></select>
+
+                            }
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label>isConfirmed(*)</label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="Appointment.isConfirmed" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label>isCompleted(*)</label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="Appointment.isCompleted" class="form-control" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    @* Partial View *@
+                    <partial name="~/Views/Shared/_AppointmentProductDetails.cshtml" model="Model.ProductsSelectedForAppointments" />
+                </div>
+
+
+
+                <br />
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" asp-route-strUrl="@Context.Request.GetDisplayUrl()" value="Update"/>
+                    <a asp-action="Index" class="btn btn-success">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</form>
+
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $('.timepicker').timepicker({
+            timeFormat: 'h:mm p',
+            interval: 30,
+            minTime: '10',
+            maxTime: '3:00pm',
+            startTime: '10:00',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
+
+        $(function () {
+            $("#datepicker").datepicker({
+                minDate: +0, maxDate: "+3M"
+            });
+        });
+
+        $(document).ready(function () {
+            var appointmentTime = document.getElementById('datepicker').value;
+            var splitData = "";
+            if (appointmentTime.indexOf(" ") > 0) {
+                splitData = appointmentTime.split(" ");
+
+            }
+            else {
+                splitData = appointmentTime.split("T");
+
+            }
+
+            var time = splitData[1].substring(0, 5);
+            if (time.slice(-1) == ":") {
+                time = time.substring(0, time.length - 1);
+
+            }
+            var amPmTime = splitData[2];
+            $('#datepicker').attr('value', splitData[0]);
+            $('#timepicker').attr('value', time + ' ' + amPmTime);
+
+        });
+
+    </script>
+    <script>
+        $('.timepicker').timepicker({
+            timeFormat: 'h:mm p',
+            interval: 30,
+            minTime: '10',
+            maxTime: '3:00pm',
+            startTime: '10:00',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
+
+        $(function () {
+            $("#datepicker2").datepicker({
+                minDate: +0, maxDate: "+3M"
+            });
+        });
+
+        $(document).ready(function () {
+            var appointmentTime = document.getElementById('datepicker2').value;
+            var splitData = "";
+            if (appointmentTime.indexOf(" ") > 0) {
+                splitData = appointmentTime.split(" ");
+
+            }
+            else {
+                splitData = appointmentTime.split("T");
+
+            }
+
+            var time = splitData[1].substring(0, 5);
+            if (time.slice(-1) == ":") {
+                time = time.substring(0, time.length - 1);
+
+            }
+            var amPmTime = splitData[2];
+            $('#datepicker2').attr('value', splitData[0]);
+            $('#timepicker').attr('value', time + ' ' + amPmTime);
+
+        });
+
+    </script>
+}

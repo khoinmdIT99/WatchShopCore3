@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+
+    <div class="container body-content">
+        <br />
+        <h2 class="text-info">Checkout!</h2>
+
+
+        <div class="p-4 border rounded">
+            <form asp-action="Checkout" method="post" class="form-horizontal" role="form">
+                <legend>Customer Informations</legend>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Name(*): </label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" name="cusName" required class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Phone Number(*): </label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" name="cusPhone" required class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Email: </label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" name="cusMail" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Address(*): </label>
+                    </div>
+                    <div class="col-8">
+                        <textarea type="text" name="cusAddress" class="form-control" rows="6" style="height:50px;"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Note: </label>
+                    </div>
+                    <div class="col-8">
+                        <textarea type="text" name="note" placeholder="note..." class="form-control" rows="6" style="height:50px;"></textarea>
+                    </div>
+                </div>
+                <legend>
+                    Payment Methods
+                </legend>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>
+                            Payment type:
+                        </label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" required class="form-control" value="Payment on delivery" disabled>
+                    </div>
+                </div>
+                <legend>
+                    Delivery Methods
+                </legend>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label>Delivery type: </label>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" required class="form-control" value="Free ships" disabled>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group float-left">
+                    <a asp-action="Index" asp-controller="ShoppingCart" class="btn btn-primary">Back to your Cart</a>
+                </div>
+                <div class="form-group text-right" >
+                    <input class="btn btn-success" type="submit" value="Complete order" />
+                </div>
+
+
+            </form>
+        </div>
+        <br />
+    </div>
+

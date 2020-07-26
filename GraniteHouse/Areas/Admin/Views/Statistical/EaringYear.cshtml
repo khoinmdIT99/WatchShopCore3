@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewData["Title"] = "EaringYear";
+}
+
+
+
+
+
+<script>
+    var thang1 =@ViewBag.January;
+
+    var thang2 =@ViewBag.February;
+
+    var thang3 =@ViewBag.March;
+
+    var thang4 =@ViewBag.April;
+
+    var thang5 =@ViewBag.May;
+
+    var thang6 =@ViewBag.June;
+
+    var thang7 =@ViewBag.July;
+
+    var thang8 =@ViewBag.August;
+
+    var thang9 =@ViewBag.September;
+
+    var thang10 =@ViewBag.October;
+
+    var thang11 =@ViewBag.November;
+
+    var thang12 =@ViewBag.December;
+
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            theme: "light2",
+            axisY: {
+                title: "Unit: Vnđ"
+            },
+            data: [{
+                type: "column",
+                dataPoints: [
+                    { y: thang1, label: "January" },
+                    { y: thang2, label: "February" },
+                    { y: thang3, label: "March" },
+                    { y: thang4, label: "April" },
+                    { y: thang5, label: "May" },
+                    { y: thang6, label: "June" },
+                    { y: thang7, label: "July" },
+                    { y: thang8, label: "August" },
+                    { y: thang9, label: "September" },
+                    { y: thang10, label: "October" },
+                    { y: thang11, label: "November" },
+                    { y: thang12, label: "December" }
+                ]
+            }]
+        });
+        chart.render();
+
+    }
+</script>
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h2 class="text-info">Earnings @DateTime.Now.Year</h2>
+            <h2 class="text-success">Total Revenue: @ViewBag.EarningThisYear.ToString("#,##0") Vnđ</h2>
+        </div>
+        <div class="card-body">
+            <div id="chartContainer" style="height: 370px; width: 100%;margin-top:20px;"></div>
+        </div>       
+    </div>
+    
+</div>
+
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+

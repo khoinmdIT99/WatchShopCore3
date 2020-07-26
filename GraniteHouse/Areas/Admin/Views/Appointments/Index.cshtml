@@ -1,0 +1,178 @@
+﻿@model GraniteHouse.Models.ViewModel.AppointmentViewModel
+
+<form method="get">
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <a asp-area="Admin" asp-action="Index" asp-controller="Appointments"><h2 class="text-info">Orders List</h2></a>
+                <div style="height:150px; background-color:aliceblue" class="container">
+                    @* We will add search criteria *@
+                    <div class="col-12">
+                        <div class="row" style="padding-top:10px;">
+                            <div class="col-2">
+                                Customer Name
+                            </div>
+                            <div class="col-3">
+                                @Html.Editor("searchName", new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="col-2">
+
+                            </div>
+                            <div class="col-2">
+                                Email
+                            </div>
+                            <div class="col-3">
+                                @Html.Editor("searchEmail", new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+
+                        </div>
+                        <div class="row" style="padding-top:10px;">
+                            <div class="col-2">
+                                Phone Number
+                            </div>
+                            <div class="col-3">
+                                @Html.Editor("searchPhone", new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                            <div class="col-2">
+
+                            </div>
+                            <div class="col-2">
+                                Delivery Date
+                            </div>
+                            <div class="col-3">
+                                @Html.Editor("searchDate", new { htmlAttributes = new { @class = "form-control", @id = "datepicker" } })
+                            </div>
+
+                        </div>
+                        <div class="row" style="padding-top:10px;">
+                            <div class="col-2">
+                            </div>
+                            <div class="col-3">
+                            </div>
+                            <div class="col-2">
+
+                            </div>
+                            <div class="col-2">
+                            </div>
+                            <div class="col-3">
+                                <button type="submit" name="submit" value="Search" class="btn btn-primary form-control">
+                                    <i class="fas fa-search"></i> Search
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="dropdown text-right">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" asp-area="Admin" asp-action="Index" asp-controller="Appointments" asp-route-OrderN="NewOrder">New Orders</a>
+                        <a class="dropdown-item" asp-area="Admin" asp-action="Index" asp-controller="Appointments" asp-route-OrderS="ShippingOrder">Orders On Shipping</a>
+                        <a class="dropdown-item" asp-area="Admin" asp-action="Index" asp-controller="Appointments" asp-route-OrderC="CompletedOrder">Completed Orders</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-body">
+                <table class="table table-striped border">
+                    <tr class="table-info">
+                        <th>
+                            Sale Person
+                        </th>
+                        <th>
+                            Created Date
+                        </th>
+                        <th>
+                            Shipping Date
+                        </th>
+                        <th>
+                            Customer Name
+                        </th>
+                        <th>
+                            Customer Phone
+                        </th>
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model.Appointments)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.SalesPerson.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.AppointmentCreatedDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.AppointmentDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.CustomerName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.CustomerPhoneNumber)
+                            </td>
+                            <td>
+                                @if (item.isConfirmed == true)
+                                {
+                                    if (item.isCompleted == true)
+                                    {
+                                        <i class="fa fa-check" style="color:forestgreen"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-truck" style="color:dodgerblue;"></i>
+                                    }
+                                }
+                                else
+                                {
+                                    <i class="fa fa-times" style="color:orangered"></i>
+                                }
+                            </td>
+
+                            <td>
+                                <partial name="_TableButtonPartial" model="item.Id" />
+                            </td>
+                        </tr>
+
+                    }
+                </table>
+            </div>
+
+
+
+
+        </div>
+        <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+             page-class="btn border" page-class-normal="btn btn-default active"
+             page-class-selected="btn btn-primary active" class="btn-group m-1"></div>
+    </div>
+
+
+
+
+
+
+</form>
+
+@section Scripts{
+    <script>
+
+        $(function () {
+            $("#datepicker").datepicker({
+                minDate: +0, maxDate: "+3M"
+            });
+        });
+    </script>
+}

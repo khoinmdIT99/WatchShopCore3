@@ -1,0 +1,49 @@
+﻿@model IEnumerable<GraniteHouse.Models.Category>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="row">
+                <div class="col-6">
+                    <a asp-area="Admin" asp-action="Index" asp-controller="Category"><h2 class="text-info"> Categories List</h2></a>
+
+                </div>
+                <div class="col-6 text-right">
+                    <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus"></i>&nbsp; New Category</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped border">
+                <tr class="table-info">
+                    <th>
+                        @Html.DisplayNameFor(m => m.Name)
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(m => item.Name)
+                        </td>
+                        <td>
+                            <partial name="_TableButtonPartial" model="item.Id" />
+                        </td>
+                    </tr>
+
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

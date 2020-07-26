@@ -1,0 +1,44 @@
+﻿@model GraniteHouse.Models.ViewModel.AppointmentDetailsViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>In hóa đơn</title>
+    <link rel="stylesheet" href="~/css/style.css" media="all" />
+</head>
+<body style="max-height:960px">
+    <header class="clearfix">
+        <div id="logo">
+            <h1 style="font-size:35px;">Watch Shop</h1>
+        </div>
+        <div id="company">
+            <h2 class="name">Đức Đào Company</h2>
+            <div>484 Lê Văn Việt, Quận 9, TP.HCM</div>
+            <div>0385639830</div>
+            <div><a href="mailto:hieukio1159@gmail.com">hieukio1159@gmail.com</a></div>
+        </div>
+    </header>
+    <main>
+        <div id="details" class="clearfix">
+            <div id="client">
+                <div class="to">Invoice to:</div>
+                <h2 class="name">@Model.Appointment.CustomerName</h2>
+                <div class="address">@Model.Appointment.CustomerPhoneNumber</div>
+                <div class="fa-phone">@Model.Appointment.CustomerAddress</div>
+            </div>
+            <div id="invoice">
+                <h1>@Model.Appointment.Id</h1>
+                <div class="date">Imported Date: @Model.Appointment.AppointmentCreatedDate</div>
+                <div class="date">Exported Date: @Model.Appointment.AppointmentDate</div>
+            </div>
+        </div>       
+        <partial name="~/Views/Shared/_Invoice.cshtml" model="Model.ProductsSelectedForAppointments" />
+        <div id="thanks">Thank for buying!</div>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>

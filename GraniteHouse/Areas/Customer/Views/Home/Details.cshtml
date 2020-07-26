@@ -1,0 +1,120 @@
+﻿@model GraniteHouse.Models.Products
+@using Microsoft.AspNetCore.Http.Extensions
+
+<form method="post">
+
+
+    <div class="container body-content">
+        <br />
+        <h2 class="text-info">Product Details</h2>
+        <div class="p-4 border rounded row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Name" class="form-control" style="border:none" readonly />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @{
+                        decimal newPrice = (Model.Price - ((Model.Price * Model.Discount) / 100));
+                    }
+                    <div class="col-4">
+                        <label asp-for="Price"></label>
+                    </div>
+                    <div class="col-8">
+                        @{
+                            string p = String.Format("{0:0,0}", newPrice);
+                            string o = String.Format("{0:0,0}", Model.Price);
+
+                        }
+                        @if (Model.Price > newPrice)
+                        {
+                            <input asp-for="@p" class="form-control" style="border:none" readonly />
+                        }
+                        else
+                        {
+                            <input asp-for="@o" class="form-control" style="border:none" readonly />
+                        }
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Brand"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Brand.Name" class="form-control" style="border:none" readonly />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Description"></label>
+                    </div>
+                    <div class="col-8">
+                        <textarea asp-for="Description" class="form-control" style="border:none" readonly rows="6" style="height:100px;"></textarea>
+                    </div>
+                </div>
+                @if (!Model.SpecialTags.Name.Equals("--None--"))
+                {
+                    <div class="form-group row">
+                        <div class="col-4">
+                            <label asp-for="SpecialTags"></label>
+                        </div>
+                        <div class="col-8">
+                            <input asp-for="SpecialTags.Name" class="form-control" style="border:none" readonly />
+                        </div>
+                    </div>
+                }
+                <div class="form-group row">
+                    <div class="col-4">
+                    </div>
+                    <div class="col-8">
+                        @if (Model.Available)
+                        {
+                            <button type="submit" value="Add to Bag" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-productId="@Model.Id" class="btn btn-danger form-control" asp-route-strUrl="@Context.Request.GetDisplayUrl()"><i class="fas fa-shopping-cart"></i> Add To Bag</button>
+
+                        }
+                        else
+                        {
+                            <button type="submit" disabled value="Add to Bag" asp-controller="ShoppingCart" asp-action="AddToShoppingCart" asp-route-productId="@Model.Id" class="btn btn-danger form-control" asp-route-strUrl="@Context.Request.GetDisplayUrl()"><i class="fas fa-shopping-cart"></i> Add To Bag</button>
+
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-1">
+
+            </div>
+            <div class="col-3">
+                <img src="@Model.Image" width="100%" style="border-radius:5px; border:1px solid #bbb9b9;" />
+                <br /><br />
+                @if (Model.Available)
+                {
+                    <img src="~/images/inStock.png" width="50%" />
+
+                }
+                else
+                {
+                    <img src="~/images/out-of-stock-png-2.png" width="100%" />
+                }
+            </div>
+
+
+
+            <div class="form-group">
+                <input hidden asp-for="Id" />
+                <a href="#" class="btn btn-success" onclick="goBack()">Back to List</a>
+            </div>
+        </div>
+    </div>
+    <br />
+</form>
+
+<script>
+function goBack() {
+  window.history.back();
+}
+</script>
